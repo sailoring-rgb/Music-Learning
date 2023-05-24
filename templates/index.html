@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-12 text-center">
+          <br>
+          <h1> Music Generation with AI</h1>
+          <hr>
+          <button id="generateButton" class="btn btn-primary btn-block" onclick="callServer()">Generate music</button>
+        </div>
+      </div>
+
+    <script>
+      function callServer() {
+        fetch('/generate_music_route') // Replace '/generate_music_route' with the actual route in your Flask server
+          .then(response => {
+            // Handle the response from the server
+          })
+          .catch(error => {
+            // Handle any errors
+            console.error('Error:', error);
+          });
+      }
+    </script>
+{% endblock %}
