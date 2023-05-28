@@ -2,17 +2,90 @@
 
 {% block content %}
 
-    <div class="row" style="background-image: url('/images/background.png'); background-size: cover; background-repeat: no-repeat;">
+      <style>
+        .artists-container {
+          display: flex;
+          justify-content: center;
+          gap: 10px;
+          width:100%;
+        }
+
+        .artist-button {
+          position: relative;
+          overflow: hidden;
+          border-radius: 10px;
+          width: 100%;
+          height: 100%;
+          transition: transform 0.3s;
+        }
+        
+        .artist-button:hover {
+          transform: scale(1.05);
+          cursor:pointer;
+        }
+        
+        .artist-button::before {
+          content: attr(id);
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.4);
+          color: #fff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0;
+          transition: opacity 0.3s;
+        }
+        
+        .artist-button:hover::before {
+          opacity: 1;
+        }
+
+        .smiley {
+          font-family: "Segoe UI Emoji", sans-serif;
+        }
+      </style>
+
+      <div class="row" style="background-color: rgba(0, 0, 0, 0.7); border-radius: 30px;"></div>
         <div class="col-12 text-center">
           <br>
-          <h1> Music Generation with AI</h1>
+          <h1 style="color:antiquewhite; margin-bottom:8vh;margin-top: 6vh;"> Music Generation with AI</h1>
           <hr>
-          <button id="generateButton" class="btn btn-primary btn-block" onclick="callServer()">Generate music</button>
-          <img src="../templates/images/background.png">
-          <img src="./images/background.png">
-          <img src="./templates/images/background.png">
+          <div class="artists-container" >
+            <div class="artist-button" id="Halsey" style="width:15%;height:15%">
+              <img src="{{ url_for('static', filename='halsey-big.png') }}" alt="Halsey" style="width:100%;height:100%;">
+            </div>
+            <div class="artist-button" id="Beethoven" style="width:15%;height:15%">
+              <img src="{{ url_for('static', filename='beethoven.jpg') }}" alt="Beethoven" style="width:100%;height:100%;">
+            </div>
+            <div class="artist-button" id="Madonna" style="width:15%;height:15%">
+              <img src="{{ url_for('static', filename='madonna.jpg') }}" alt="Madonna" style="width:100%;height:100%;">
+            </div>
+          </div>
         </div>
       </div>
+
+      <div  data-toggle="modal" data-target="#exampleModal" style="position: absolute;bottom: 3vh;right: 3vh;width: 7vh;height: 7vh;border-radius: 5000px;padding:10px;background-color: antiquewhite;color: rgb(18, 18, 18);text-align: center;display: flex; align-items: center;justify-content: center;">
+        <h4>i</h4>
+      </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document" style="position: fixed; top: 0; right: 0; left: 0; width: 100%; height: 100%; z-index: 9999; display: flex; align-items: center; justify-content: center;">
+        <div class="modal-content" style="background-color: rgba(250, 235, 215, 0.717); padding: 20px; border-radius: 5px; position: relative;">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                  style="position: absolute; top: 10px; right: 10px; width: 20px; height: 20px; cursor: pointer; font-size: 20px; color: #000; border: none; background-color: transparent; outline: none;">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <div class="modal-body">
+            <p>Create music effortlessly with a single click, throught the power of an <b>AI generator</b>. Our music generator empowers you to compose new melodies inspired by <ins>one of the artists available</ins> in this website. Improve your creations by seeking valuable feedback and let the AI generator transform your musical journey into an extraordinary experience ☻</p>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <script>
       function callServer() {
