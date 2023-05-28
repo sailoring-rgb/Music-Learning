@@ -1,12 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="row">
+
+    <div class="row" style="background-image: url('/images/background.png'); background-size: cover; background-repeat: no-repeat;">
         <div class="col-12 text-center">
           <br>
           <h1> Music Generation with AI</h1>
           <hr>
           <button id="generateButton" class="btn btn-primary btn-block" onclick="callServer()">Generate music</button>
+          <img src="../templates/images/background.png">
+          <img src="./images/background.png">
+          <img src="./templates/images/background.png">
         </div>
       </div>
 
