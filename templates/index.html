@@ -182,10 +182,5 @@
         var redirectURL = '/generate_music_route?artist=' + encodeURIComponent(artistID);
         window.location.href = redirectURL;
       }
-    
-    if (window.performance && window.performance.navigation.type === window.performance.navigation.TYPE_BACK_FORWARD) {
-      alert("yes");
-      document.getElementById("loading").style.display = "none";
-    }
     </script>
 {% endblock %}
