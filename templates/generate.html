@@ -2,10 +2,70 @@
 
 {% block content %}
     
+    <style>
+    .playbar-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 70%;
+    }
+
+    .playbar {
+        width: 50%;
+        height: 15%;
+        background-color: rgba(250, 235, 215, 0.694);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        padding: 10px;
+    }
+
+    .playbar-controls {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 0 10px;
+    }
+
+    .playbar-button {
+        border: none;
+        background-color: transparent;
+        font-size: 20px;
+        cursor: pointer;
+        outline: none;
+    }
+
+    .playbar-progress {
+        height: 5px;
+        width: 57%;
+        background-color: #e0e0e0;
+        position: relative;
+    }
+
+    .playbar-progress-filled {
+        height: 100%;
+        background-color: #000000;
+        position: absolute;
+        width: 0%;
+        transition: width 0.3s ease;
+    }
+
+    .playbar-time {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin-left: 10px;
+        font-size: 12px;
+        color: #000000;
+        padding-right: 30px;
+    }
+    </style>
+
       <div class="row" style="background-color: rgba(0, 0, 0, 0.7); border-radius: 30px;"></div>
         <div class="col-12 text-center">
           <br>
-          <h1 style="color:antiquewhite; margin-bottom:8vh;margin-top: 6vh;"> Music Generation with AI</h1>
+          <h1 style="color:antiquewhite; margin-bottom:8vh;margin-top: 7%;"> Music Generation with AI</h1>
           <hr>
         </div>
       </div>
@@ -30,10 +90,30 @@
     </div>
 
     <div class="artist-info" style="text-align: center; margin-top: 20px;">
-        <h3 style="color: rgb(250, 235, 215)">Selected Artist:</h3>
-        <div id="artistAttribute" style="font-size: 24px; margin-top: 10px; color: rgb(250, 235, 215)">
+        <p><h3 style="color: rgb(250, 235, 215)">Selected Artist:</h3></p>
+        <div id="artistAttribute" style="font-style:oblique; font-size: 20px; margin-top: 10px; color: whitesmoke">
         </div>
     </div>
+    
+    <div class="playbar-container" style="margin-top:30px">
+        <div class="playbar">
+          <div class="playbar-controls">
+            <button class="playbar-button" id="backward-button">&#9668;&#9668;</button>
+            <button class="playbar-button" id="play-pause-button">&#9658;</button>
+            <button class="playbar-button" id="forward-button">&#9658;&#9658;</button>
+          </div>
+          <div class="playbar-time">
+            <span id="current-time">0:00</span> / <span id="total-time">0:00</span>
+          </div>
+          <div class="playbar-progress">
+            <div class="playbar-progress-filled"></div>
+          </div>
+        </div>
+    </div>
+
+    <audio id="audio-player">
+        <source src="/images/look_after_you.mp3" type="audio/mp3">
+    </audio>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -43,4 +123,53 @@
             artistButton.textContent = artistParam;
         });
     </script>
+
+<script>
+    const audioPlayer = document.getElementById('audio-player');
+    const playPauseButton = document.getElementById('play-pause-button');
+    const currentTimeElement = document.getElementById('current-time');
+    const totalTimeElement = document.getElementById('total-time');
+  
+    playPauseButton.addEventListener('click', function() {
+      if (audioPlayer.paused) {
+        audioPlayer.play();
+        playPauseButton.innerHTML = '&#10074;&#10074;';
+      } else {
+        audioPlayer.pause();
+        playPauseButton.innerHTML = '&#9658;';
+      }
+    });
+  
+    audioPlayer.addEventListener('ended', function() {
+      playPauseButton.innerHTML = '&#9658;';
+    });
+  
+    const backwardButton = document.getElementById('backward-button');
+    const forwardButton = document.getElementById('forward-button');
+  
+    backwardButton.addEventListener('click', function() {
+      audioPlayer.currentTime -= 5;
+    });
+  
+    forwardButton.addEventListener('click', function() {
+      audioPlayer.currentTime += 5;
+    });
+  
+    audioPlayer.addEventListener('timeupdate', function() {
+      const currentTime = formatTime(audioPlayer.currentTime);
+      const totalTime = formatTime(audioPlayer.duration);
+  
+      currentTimeElement.textContent = currentTime;
+      totalTimeElement.textContent = totalTime;
+  
+      const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+      document.querySelector('.playbar-progress-filled').style.width = `${progress}%`;
+    });
+  
+    function formatTime(time) {
+      const minutes = Math.floor(time / 60);
+      const seconds = Math.floor(time % 60).toString().padStart(2, '0');
+      return `${minutes}:${seconds}`;
+    }
+  </script>
 {% endblock %}
