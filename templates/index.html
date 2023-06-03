@@ -108,7 +108,7 @@
       </style>
 
       <div id="loading" class="loading-container" style="display:none">
-        <div class="loading-spinner">
+        <div class="loading-spinner" id="loadingSpinner">
           <div class="dot"></div>
           <div class="dot"></div>
           <div class="dot"></div>
@@ -170,12 +170,22 @@
       function showLoadingAndRedirect(artistID) {
         document.getElementById("loading").style.display = "flex";
         const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
-        delay(2000).then(() => redirectToGenerate(artistID));
+        delay(2000)
+          .then(() => redirectToGenerate(artistID))
+          .then(() => document.getElementById("loading").style.display = "none")
+          .catch(error => {
+              console.error('Error Redirecting:', error);
+          });
       }
 
       function redirectToGenerate(artistID) {
         var redirectURL = '/generate_music_route?artist=' + encodeURIComponent(artistID);
         window.location.href = redirectURL;
       }
+    
+    if (window.performance && window.performance.navigation.type === window.performance.navigation.TYPE_BACK_FORWARD) {
+      alert("yes");
+      document.getElementById("loading").style.display = "none";
+    }
     </script>
 {% endblock %}
