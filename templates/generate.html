@@ -112,7 +112,7 @@
     </div>
 
     <audio id="audio-player">
-        <source src="/images/look_after_you.mp3" type="audio/mp3">
+        <!--source src="/images/look_after_you.mp3" type="audio/mp3"-->
     </audio>
 
     <script>
@@ -121,55 +121,88 @@
             const artistParam = urlParams.get('artist');
             const artistButton = document.getElementById('artistAttribute');
             artistButton.textContent = artistParam;
-        });
-    </script>
 
-<script>
-    const audioPlayer = document.getElementById('audio-player');
-    const playPauseButton = document.getElementById('play-pause-button');
-    const currentTimeElement = document.getElementById('current-time');
-    const totalTimeElement = document.getElementById('total-time');
-  
-    playPauseButton.addEventListener('click', function() {
-      if (audioPlayer.paused) {
-        audioPlayer.play();
-        playPauseButton.innerHTML = '&#10074;&#10074;';
-      } else {
-        audioPlayer.pause();
-        playPauseButton.innerHTML = '&#9658;';
-      }
-    });
-  
-    audioPlayer.addEventListener('ended', function() {
-      playPauseButton.innerHTML = '&#9658;';
-    });
-  
-    const backwardButton = document.getElementById('backward-button');
-    const forwardButton = document.getElementById('forward-button');
-  
-    backwardButton.addEventListener('click', function() {
-      audioPlayer.currentTime -= 5;
-    });
-  
-    forwardButton.addEventListener('click', function() {
-      audioPlayer.currentTime += 5;
-    });
-  
-    audioPlayer.addEventListener('timeupdate', function() {
-      const currentTime = formatTime(audioPlayer.currentTime);
-      const totalTime = formatTime(audioPlayer.duration);
-  
-      currentTimeElement.textContent = currentTime;
-      totalTimeElement.textContent = totalTime;
-  
-      const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
-      document.querySelector('.playbar-progress-filled').style.width = `${progress}%`;
-    });
-  
-    function formatTime(time) {
-      const minutes = Math.floor(time / 60);
-      const seconds = Math.floor(time % 60).toString().padStart(2, '0');
-      return `${minutes}:${seconds}`;
-    }
-  </script>
+
+        });
+
+        const audioPlayer = document.getElementById('audio-player');
+        const playPauseButton = document.getElementById('play-pause-button');
+        const currentTimeElement = document.getElementById('current-time');
+        const totalTimeElement = document.getElementById('total-time');
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        const artistParam = urlParams.get('artist');
+        const artistButton = document.getElementById('artistAttribute');
+        artistButton.textContent = artistParam;
+
+        if (artistButton.textContent !== "Beethoven") {
+            while (audioPlayer.firstChild) {
+                audioPlayer.removeChild(audioPlayer.firstChild);
+            }
+          
+            var sourceElement = document.createElement("source");
+            sourceElement.src = "/images/look_after_you.mp3";
+            sourceElement.type = "audio/mp3";
+          
+            audioPlayer.appendChild(sourceElement);
+        }
+        else {
+            while (audioPlayer.firstChild) {
+                audioPlayer.removeChild(audioPlayer.firstChild);
+            }
+            
+            var folderPath = "/images/beethoven/";
+            var fileList = ["beeth1.mp3", "beeth2.mp3", "beeth3.mp3"];
+            var randomIndex = Math.floor(Math.random() * fileList.length);
+            var randomFilePath = folderPath + fileList[randomIndex];
+
+            var sourceElement = document.createElement("source");
+            sourceElement.src = randomFilePath;
+            sourceElement.type = "audio/mp3";
+          
+            audioPlayer.appendChild(sourceElement);
+        }
+
+        playPauseButton.addEventListener('click', function() {
+          if (audioPlayer.paused) {
+            audioPlayer.play();
+            playPauseButton.innerHTML = '&#10074;&#10074;';
+          } else {
+            audioPlayer.pause();
+            playPauseButton.innerHTML = '&#9658;';
+          }
+        });
+      
+        audioPlayer.addEventListener('ended', function() {
+          playPauseButton.innerHTML = '&#9658;';
+        });
+      
+        const backwardButton = document.getElementById('backward-button');
+        const forwardButton = document.getElementById('forward-button');
+      
+        backwardButton.addEventListener('click', function() {
+          audioPlayer.currentTime -= 5;
+        });
+      
+        forwardButton.addEventListener('click', function() {
+          audioPlayer.currentTime += 5;
+        });
+      
+        audioPlayer.addEventListener('timeupdate', function() {
+          const currentTime = formatTime(audioPlayer.currentTime);
+          const totalTime = formatTime(audioPlayer.duration);
+      
+          currentTimeElement.textContent = currentTime;
+          totalTimeElement.textContent = totalTime;
+      
+          const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+          document.querySelector('.playbar-progress-filled').style.width = `${progress}%`;
+        });
+      
+        function formatTime(time) {
+          const minutes = Math.floor(time / 60);
+          const seconds = Math.floor(time % 60).toString().padStart(2, '0');
+          return `${minutes}:${seconds}`;
+        }
+      </script>
 {% endblock %}
