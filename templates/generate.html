@@ -111,9 +111,7 @@
         </div>
     </div>
 
-    <audio id="audio-player">
-        <!--source src="/images/look_after_you.mp3" type="audio/mp3"-->
-    </audio>
+    <audio id="audio-player"></audio>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -121,8 +119,6 @@
             const artistParam = urlParams.get('artist');
             const artistButton = document.getElementById('artistAttribute');
             artistButton.textContent = artistParam;
-
-
         });
 
         const audioPlayer = document.getElementById('audio-player');
@@ -134,32 +130,39 @@
         const artistParam = urlParams.get('artist');
         const artistButton = document.getElementById('artistAttribute');
         artistButton.textContent = artistParam;
+        
+        var folderPath = "";
+        var fileList = []; 
+        var randomFilePath = "";
+        var randomIndex = 0;
+        var sourceElement = document.createElement("source");
 
-        if (artistButton.textContent !== "Beethoven") {
+        if (artistButton.textContent !== ""){
             while (audioPlayer.firstChild) {
                 audioPlayer.removeChild(audioPlayer.firstChild);
             }
-          
-            var sourceElement = document.createElement("source");
-            sourceElement.src = "/images/look_after_you.mp3";
-            sourceElement.type = "audio/mp3";
-          
-            audioPlayer.appendChild(sourceElement);
-        }
-        else {
-            while (audioPlayer.firstChild) {
-                audioPlayer.removeChild(audioPlayer.firstChild);
+
+            if (artistButton.textContent === "Halsey") {
+                folderPath = "/images/halsey/";
+                fileList = ["halsey1.mp3", "halsey2.mp3", "halsey3.mp3", "halsey4.mp3"];
             }
+            else if (artistButton.textContent === "Beethoven"){
+                folderPath = "/images/beethoven/";
+                fileList = ["beeth1.mp3", "beeth2.mp3", "beeth3.mp3"];
+            }
+            else if (artistButton.textContent === "Madonna"){
+                folderPath = "/images/madonna/";
+                fileList = ["madonna1.mp3", "madonna2.mp3", "madonna3.mp3", "madonna4.mp3"];
+            }
+            else {
+                folderPath = "/images/chopin/";
+                fileList = ["chopin1.mp3", "chopin2.mp3", "chopin3.mp3"];
+            }
+            randomIndex = Math.floor(Math.random() * fileList.length);
+            randomFilePath = folderPath + fileList[randomIndex];
             
-            var folderPath = "/images/beethoven/";
-            var fileList = ["beeth1.mp3", "beeth2.mp3", "beeth3.mp3"];
-            var randomIndex = Math.floor(Math.random() * fileList.length);
-            var randomFilePath = folderPath + fileList[randomIndex];
-
-            var sourceElement = document.createElement("source");
             sourceElement.src = randomFilePath;
             sourceElement.type = "audio/mp3";
-          
             audioPlayer.appendChild(sourceElement);
         }
 
@@ -181,11 +184,11 @@
         const forwardButton = document.getElementById('forward-button');
       
         backwardButton.addEventListener('click', function() {
-          audioPlayer.currentTime -= 5;
+          audioPlayer.currentTime -= 3;
         });
       
         forwardButton.addEventListener('click', function() {
-          audioPlayer.currentTime += 5;
+          audioPlayer.currentTime += 3;
         });
       
         audioPlayer.addEventListener('timeupdate', function() {

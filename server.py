@@ -1,4 +1,5 @@
-from flask import Flask, render_template
+import request, configparser
+from flask import Flask, render_template, request
 
 app = Flask(__name__, static_folder='./templates/images')
 
@@ -12,4 +13,4 @@ def generate_music():
     return render_template('generate.html')
 
 if __name__ == '__main__':
-    app.run(port=8000)
+    app.run(host="0.0.0.0", port=5000)
