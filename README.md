@@ -4,6 +4,8 @@ Create music effortlessly with **a single click**, throught the power of an __AI
 
 <ins>Website</ins>: <a href="https://deel.pythonanywhere.com/">https://deel.pythonanywhere.com/</a>
 
+`Final Classification` : 18.9/20
+
 ### Authors:
 - <a href="https://github.com/sailoring-rgb/">Ana Henriques</a>
 - <a href="https://github.com/LittleLevi05/">Henrique Costa</a>
