@@ -8,4 +8,4 @@ Create music effortlessly with **a single click**, throught the power of an __AI
 
 ### Authors:
 - <a href="https://github.com/sailoring-rgb/">Ana Henriques</a>
-- <a href="https://github.com/LittleLevi05/">Henrique Costa</a>
+- <a href="https://github.com/parola05/">Henrique Costa</a>
