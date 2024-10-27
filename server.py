@@ -8,7 +8,6 @@ def index():
 
 @app.route('/generate_music_route')
 def generate_music():
-    print("cheguei!")
     return render_template('generate.html')
 
 if __name__ == '__main__':
